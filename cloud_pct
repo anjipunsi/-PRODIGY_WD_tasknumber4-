@@ -1,0 +1,54 @@
+
+cloud_pct.innerHTML = response.cloud_pct
+temp.innerHTML = response.temp
+feels_like.innerHTML = response.feels_like
+humidity.innerHTML = response.humidity 
+min_temp.innerHTML = response.min_temp
+max_temp.innerHTML = response.max_temp
+wind_speed.innerHTML = response.wind_speed
+wind_degrees.innerHTML = response.wind_degrees
+sunrise.innerHTML = response.sunrise
+sunset.innerHTML = response.sunset
+  
+
+const cityName = document.getElementById('cityName');
+const city = document.getElementById('city');
+const submit = document.getElementById('submit');
+
+const apiKey = 'b9f924d45bmsh96c015b49be87f0p15d93djsn1e81bf284c6f'; // Replace this with your actual API key
+const apiUrl = 'https://weather-by-api-ninjas.p.rapidapi.com/v1/weather';
+
+const getWeather = (city) => {
+  cityName.innerHTML = city;
+
+  const url = `${apiUrl}?city=${city}`;
+  const options = {
+    method: 'GET',
+    headers: {
+      'X-RapidAPI-Key': apiKey,
+      'X-RapidAPI-Host': 'weather-by-api-ninjas.p.rapidapi.com'
+    }
+  };
+
+  async function fetchData() {
+    try {
+      const response = await fetch(url, options);
+      const data = await response.json();
+
+      // Rest of your code to update the weather data on the webpage
+      // ...
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  fetchData();
+}
+
+submit.addEventListener("click", (e) => {
+  e.preventDefault();
+  getWeather(city.value);
+});
+
+// Fetch weather for Mumbai on page load
+getWeather("Mumbai");
